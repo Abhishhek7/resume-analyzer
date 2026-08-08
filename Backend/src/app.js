@@ -19,7 +19,10 @@ const interviewRouter = require("./routes/interview.routes")
 /* using all the routes here */
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
-
+app.use((req, res, next) => {
+    console.log(req.method, req.originalUrl);
+    next();
+});
 
 
 module.exports = app
