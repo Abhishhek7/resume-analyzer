@@ -34,21 +34,20 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: "https://resume-analyzer-one-nu.vercel.app",
     credentials: true
 }))
-
-// Health check
-app.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Resume Analyzer API is running"
-    })
-})
 
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
 
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
+
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Resume Analyzer API is running"
+    })
+})
 
 module.exports = app
