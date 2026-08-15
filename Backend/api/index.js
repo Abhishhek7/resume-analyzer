@@ -37,10 +37,6 @@ module.exports = async (req, res) => {
 
         await dbPromise
 
-        if (req.url !== "/" && !req.url.startsWith("/api")) {
-            req.url = `/api${req.url}`
-        }
-
         return app(req, res)
     } catch (error) {
         console.error("Vercel server error:", error)
