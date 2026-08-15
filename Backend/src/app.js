@@ -35,7 +35,7 @@ app.use(cookieParser())
 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://resume-analyzer-one-nu.vercel.app"
+    process.env.FRONTEND_URL
 ]
 
 app.use(cors({
