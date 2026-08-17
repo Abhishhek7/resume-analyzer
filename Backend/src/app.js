@@ -36,23 +36,22 @@ app.use(cookieParser());
 const allowedOrigins = [
     "http://localhost:5173",
     "https://resume-analyzer-1kaz.vercel.app",
-    process.env.FRONTEND_URL
-].filter(Boolean);
+];
 
 app.use(cors({
     origin: function (origin, callback) {
-        console.log("CORS Origin:", origin);
+        console.log("REQUEST ORIGIN:", origin);
 
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            console.log("Blocked origin:", origin);
-            callback(new Error(`CORS blocked: ${origin}`));
+            console.log("BLOCKED ORIGIN:", origin);
+            callback(new Error("Not allowed by CORS"));
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 const authRouter = require("./routes/auth.routes");

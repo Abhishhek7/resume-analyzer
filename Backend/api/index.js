@@ -22,27 +22,28 @@
 //     }
 // }
 
-require("dotenv").config()
+require("dotenv").config();
 
-const app = require("../src/app")
-const connectToDB = require("../src/config/database")
+const app = require("../src/app");
+const connectToDB = require("../src/config/database");
 
-let dbPromise
+let dbPromise;
 
 module.exports = async (req, res) => {
     try {
         if (!dbPromise) {
-            dbPromise = connectToDB()
+            dbPromise = connectToDB();
         }
 
-        await dbPromise
+        await dbPromise;
 
-        return app(req, res)
+        return app(req, res);
+
     } catch (error) {
-        console.error("Vercel server error:", error)
+        console.error("Vercel server error:", error);
 
         return res.status(500).json({
             message: "Internal server error"
-        })
+        });
     }
-}
+};
