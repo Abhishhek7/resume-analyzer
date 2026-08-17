@@ -35,14 +35,12 @@ app.use(cookieParser())
 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://resume-analyzer-1kaz.vercel.app",
-    process.env.FRONTEND_URL
-].filter(Boolean)
+    "https://resume-analyzer-1kaz.vercel.app"
+]
 
 app.use(cors({
     origin: function (origin, callback) {
         console.log("CORS Origin:", origin)
-        console.log("Allowed Origins:", allowedOrigins)
 
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true)
@@ -55,9 +53,6 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"]
 }))
 
-app.options("*", cors())
-
-// routes
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
 
