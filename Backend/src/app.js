@@ -24,45 +24,47 @@
 // })
 
 // module.exports = app
-const express = require("express")
-const cookieParser = require("cookie-parser")
-const cors = require("cors")
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(cookieParser())
+app.use(express.json());
+app.use(cookieParser());
 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://resume-analyzer-1kaz.vercel.app"
-]
+    "https://resume-analyzer-1kaz.vercel.app",
+    process.env.FRONTEND_URL
+].filter(Boolean);
 
 app.use(cors({
     origin: function (origin, callback) {
-        console.log("CORS Origin:", origin)
+        console.log("CORS Origin:", origin);
 
         if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true)
+            callback(null, true);
         } else {
-            callback(new Error(`CORS blocked: ${origin}`))
+            console.log("Blocked origin:", origin);
+            callback(new Error(`CORS blocked: ${origin}`));
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
-}))
+}));
 
-const authRouter = require("./routes/auth.routes")
-const interviewRouter = require("./routes/interview.routes")
+const authRouter = require("./routes/auth.routes");
+const interviewRouter = require("./routes/interview.routes");
 
-app.use("/api/auth", authRouter)
-app.use("/api/interview", interviewRouter)
+app.use("/api/auth", authRouter);
+app.use("/api/interview", interviewRouter);
 
 app.get("/", (req, res) => {
     res.status(200).json({
         message: "Resume Analyzer API is running"
-    })
-})
+    });
+});
 
-module.exports = app
+module.exports = app;
